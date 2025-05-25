@@ -818,6 +818,14 @@ char *T1_GetFileSearchPath( int type)
 
 }
 
+/* intT1_GetFileSearchPath(): 
+ call T1_GetFileSearchPath and truncate the line to avoid overflowing
+ error buffers*/ 
+char *intT1_GetFileSearchPath( int type)
+{
+   char  *res = T1_GetFileSearchPath(type);
+   res[900] = 0;
+}
 
 /* T1_AddToFileSearchPath(): Add the specified path element to
    the specified search path. If the existing path is the default path,

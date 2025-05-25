@@ -455,7 +455,7 @@ int intT1_scanFontDBase( char *filename)
 	   to test_for_t1_file() filename is substituted by an emty
 	   string if the file was not found: */
 	sprintf( err_warn_msg_buf, "Type 1 Font file %s.[pfa/pfb] not found (FontID=%d, SearchPath=%s)",
-		 linebuf, m-1, T1_GetFileSearchPath(T1_PFAB_PATH));
+		 linebuf, m-1, intT1_GetFileSearchPath(T1_PFAB_PATH));
 	if ((test_for_t1_file( &linebuf[0]))){
 	  T1_PrintLog( "intT1_scanFontDBase()", err_warn_msg_buf, T1LOG_WARNING);
 	  located=0;
@@ -579,7 +579,7 @@ int intT1_scanFontDBaseXLFD( char *filename)
 	   to test_for_t1_file() filename is substituted by an emty
 	   string if the file was not found: */
 	sprintf( err_warn_msg_buf, "Type 1 Font file %s.[pfa/pfb] not found (FontID=%d, SearchPath=%s)",
-		 linebuf, m-1, T1_GetFileSearchPath(T1_PFAB_PATH));
+		 linebuf, m-1, intT1_GetFileSearchPath(T1_PFAB_PATH));
 	if ((test_for_t1_file( &linebuf[0]))){
 	  T1_PrintLog( "intT1_scanFontDBase()", err_warn_msg_buf, T1LOG_WARNING);
 	  located=0;
