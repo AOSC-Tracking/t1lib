@@ -199,7 +199,9 @@ static char *token(stream)
     idx = 0;
     
     while (ch != EOF && ch != ' ' && ch != CR  && ch != LF &&
-	   ch != CTRL_Z && ch != '\t' && ch != ':' && ch != ';'){
+	   ch != CTRL_Z && ch != '\t' && ch != ':' && ch != ';'
+     && idx < (MAX_NAME -1))
+    {
       ident[idx++] = ch;
       ch = fgetc(stream);
     } /* while */
@@ -235,7 +237,7 @@ static char *linetoken(stream)
     while ((ch = fgetc(stream)) == ' ' || ch == '\t' ); 
     
     idx = 0;
-    while (ch != EOF && ch != CR  && ch != LF && ch != CTRL_Z) 
+    while (ch != EOF && ch != CR  && ch != LF && ch != CTRL_Z && idx < (MAX_NAME - 1)) 
     {
         ident[idx++] = ch;
         ch = fgetc(stream);
