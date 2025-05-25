@@ -24,7 +24,7 @@ OPTIONS   = @OPTIONS@
 X_LIBS    = @X_LIBS@
 TOPSRC    = @top_srcdir@
 XPM_LIB   = -lXpm
-XLIB      = @X_PRE_LIBS@ -lXext -lX11 @X_EXTRA_LIBS@
+XLIB      = -lX11 @X_EXTRA_LIBS@
 LDFLAGS   = @LDFLAGS@
 LDLIBS    = @LDLIBS@ 
 AR        = ar rc
@@ -65,7 +65,7 @@ SRCS = \
 
 T1LIB  = ../lib/libt1.la
 T1LIBX = ../lib/libt1x.la
-XAWLIB = -lXaw -lXt -lXmu
+XAWLIB = -lXaw -lXt
 
 
 all: xglyph

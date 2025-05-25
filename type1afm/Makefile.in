@@ -70,7 +70,7 @@ all: type1afm
 
 type1afm: $(OBJS) ../lib/t1lib.h
 	$(LIBTOOL) --mode=link \
-		$(CC) -o type1afm $(LDFLAGS) $(OBJS) $(T1LIB) $(LDLIBS)
+		$(CC) -o type1afm $(LDFLAGS) $(OBJS) $(T1LIB)
 
 .SUFFIXES: .lo
 .c.lo:
