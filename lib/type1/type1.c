@@ -1012,6 +1012,7 @@ static void FindStems( double x, double y,
   double nextdtana = 0.0;   /* tangent of post-delta against horizontal line */ 
   double nextdtanb = 0.0;   /* tangent of post-delta against vertical line */ 
   
+  if (ppoints == NULL || numppoints < 1) Error0v("FindStems: No previous point!\n");
  
   /* setup default hinted position */
   ppoints[numppoints-1].ax     = ppoints[numppoints-1].x;
@@ -1289,7 +1290,7 @@ unsigned char cipher;
 static int DoRead(CodeP)
   int *CodeP;
 {
-  if (strindex >= CharStringP->len) return(FALSE); /* end of string */
+  if (!CharStringP || strindex >= CharStringP->len) return(FALSE); /* end of string */
   /* We handle the non-documented Adobe convention to use lenIV=-1 to
      suppress charstring encryption. */
   if (blues->lenIV==-1) {
@@ -1700,7 +1701,7 @@ static int RLineTo(dx, dy)
   long pindex = 0;
   
   /* compute hinting for previous segment! */
-  if (ppoints == NULL) Error0i("RLineTo: No previous point!\n");
+  if (ppoints == NULL || numppoints < 2) Error0i("RLineTo: No previous point!\n");
   FindStems( currx, curry, currx-ppoints[numppoints-2].x, curry-ppoints[numppoints-2].y, dx, dy);
 
   /* Allocate a new path point and pre-setup data */
@@ -1729,7 +1730,7 @@ static int RRCurveTo(dx1, dy1, dx2, dy2, dx3, dy3)
   long pindex = 0;
   
   /* compute hinting for previous point! */
-  if (ppoints == NULL) Error0i("RRCurveTo: No previous point!\n");
+  if (ppoints == NULL || numppoints < 2) Error0i("RRCurveTo: No previous point!\n");
   FindStems( currx, curry, currx-ppoints[numppoints-2].x, curry-ppoints[numppoints-2].y, dx1, dy1);
 
   /* Allocate three new path points and pre-setup data */
@@ -1788,7 +1789,9 @@ static int DoClosePath()
   long tmpind;
   double deltax = 0.0;
   double deltay = 0.0;
-  
+ 
+  if (ppoints == NULL || numppoints < 1) Error0i("DoClosePath: No previous point!");
+ 
   /* If this ClosePath command together with the starting point of this
      path completes to a segment aligned to a stem, we would miss
      hinting for this point. --> Check and explicitly care for this! */
@@ -1803,6 +1806,7 @@ static int DoClosePath()
     deltax = ppoints[i].x - ppoints[numppoints-1].x;
     deltay = ppoints[i].y - ppoints[numppoints-1].y;
 
+    if (ppoints == NULL || numppoints <= i + 1) Error0i("DoClosePath: No previous point!");
     /* save nummppoints and reset to move point */
     tmpind = numppoints;
     numppoints = i + 1;
@@ -1905,7 +1909,7 @@ static int RMoveTo(dx,dy)
     FindStems( currx, curry, 0, 0, dx, dy);
   }
   else {
-    if (ppoints == NULL) Error0i("RMoveTo: No previous point!\n");
+    if (ppoints == NULL || numppoints < 2) Error0i("RMoveTo: No previous point!\n");
     FindStems( currx, curry, ppoints[numppoints-2].x, ppoints[numppoints-2].y, dx, dy);
   }
   
@@ -2155,6 +2159,7 @@ static void FlxProc(c1x2, c1y2, c3x0, c3y0, c3x1, c3y1, c3x2, c3y2,
   DOUBLE cx, cy;
   DOUBLE ex, ey;
 
+  if (ppoints == NULL || numppoints < 8) Error0v("FlxProc: No previous point!");
 
   /* Our PPOINT list now contains 7 moveto commands which
      are about to be consumed by the Flex mechanism. --> Remove these
@@ -2324,6 +2329,7 @@ static void FlxProc1()
 /*   Returns currentpoint on stack          */
 static void FlxProc2()
 {
+  if (ppoints == NULL || numppoints < 1) Error0v("FlxProc2: No previous point!");
   /* Push CurrentPoint on fake PostScript stack */
   PSFakePush( ppoints[numppoints-1].x);
   PSFakePush( ppoints[numppoints-1].y);

@@ -67,6 +67,10 @@ This module provides the following entry point to other modules:
 None.
 */
  
+#define  BITS         (sizeof(LONG)*8)
+#define  HIGHTEST(p)  (((p)>>(BITS-2)) != 0)  /* includes sign bit */
+#define  TOOBIG(xy)   ((xy < 0) ? HIGHTEST(-xy) : HIGHTEST(xy))
+
 /*
 :h2.StepLine() - Produces Run Ends for a Line After Checks
  
@@ -84,6 +88,9 @@ void StepLine(R, x1, y1, x2, y2)
        IfTrace4((LineDebug > 0), ".....StepLine: (%d,%d) to (%d,%d)\n",
                                             x1, y1, x2, y2);
  
+      if ( TOOBIG(x1) || TOOBIG(x2) || TOOBIG(y1) || TOOBIG(y2))
+              abort("Lines this big not supported", 49);
+
        dy = y2 - y1;
  
 /*
