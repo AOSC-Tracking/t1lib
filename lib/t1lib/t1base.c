@@ -905,6 +905,14 @@ static int test_for_t1_file( char *buffer )
     free(FullName);
     return(0);
   }
+  /* Fourth case: A Postscript Font t1 File */
+  buffer[i+1] = 't';
+  buffer[i+2] = '1';
+  buffer[i+3] = 0;
+  if ((FullName=intT1_Env_GetCompletePath(buffer,T1_PFAB_ptr))!=NULL) {
+    free(FullName);
+    return(0);
+  }
   
   /* If we get here no file was found => Set buffer
      to an empty string and return -1 */
