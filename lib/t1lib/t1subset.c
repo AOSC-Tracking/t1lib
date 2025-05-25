@@ -759,7 +759,7 @@ char *T1_SubsetFont( int FontID,
 	     tr_len);
     T1_PrintLog( "T1_SubsetFont()", err_warn_msg_buf,
 		 T1LOG_DEBUG);
-    l+=sprintf( &(trailerbuf[l]), linebuf); /* contains the PostScript trailer */
+    l+=sprintf( &(trailerbuf[l]), "%s", linebuf); /* contains the PostScript trailer */
   }
   
   /* compute size of output file */

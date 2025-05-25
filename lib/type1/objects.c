@@ -957,7 +957,7 @@ struct xobject *TypeErr(name, obj, expect, ret) /* non-ANSI avoids overly strict
  
        sprintf(typemsg, "Wrong object type in %s; expected %s, found %s.\n",
                   name, TypeFmt(expect), TypeFmt(obj->type));
-       IfTrace0(TRUE,typemsg);
+       IfTrace1(TRUE, "%s", typemsg);
  
        ObjectPostMortem(obj);
  
